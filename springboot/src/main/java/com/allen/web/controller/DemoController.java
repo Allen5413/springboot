@@ -24,7 +24,7 @@ public class DemoController {
     public String save(){
         Demo d = new Demo();
         d.setName("Allen");
-        demoService.save(d);//保存数据.
+        //demoService.save(d);//保存数据.
         return "ok.Demo2Controller.save";
     }
 

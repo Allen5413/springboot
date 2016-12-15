@@ -9,6 +9,12 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface UserDAO extends CrudRepository<User, Long> {
 
+    /**
+     * 用户登录验证查询
+     * @param loginName
+     * @param pwd
+     * @return
+     */
     @Query("from User where loginName = ?1 and pwd = ?2")
     public User findByLoginNameAndPwd(String loginName, String pwd);
 }

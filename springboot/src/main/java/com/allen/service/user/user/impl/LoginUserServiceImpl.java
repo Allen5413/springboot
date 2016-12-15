@@ -17,8 +17,8 @@ public class LoginUserServiceImpl implements LoginUserService {
     private UserDAO userDAO;
 
     @Override
-    public boolean login(String loginName, String pwd) throws Exception {
+    public User login(String loginName, String pwd) throws Exception {
         User user = userDAO.findByLoginNameAndPwd(loginName, pwd);
-        return true;
+        return user;
     }
 }

@@ -17,6 +17,7 @@ public class User {
     @GeneratedValue
     private Long id;                            //主键
     private String loginName;
+    private String pwd;
     private String name;                        //姓名
     private String phone;                       //手机
     private Integer state;                      //用户状态
@@ -114,5 +115,13 @@ public class User {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header :: header">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <strong style="font-size: 20px;">重庆西网文化传播有限公司教材管理系统</strong>
+    </div>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+            <li class="am-dropdown" data-am-dropdown="">
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                    <span class="am-icon-users"></span> ${name} 管理员 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li><a href="#" onclick="openEditPwd()"><span class="am-icon-cog"></span> 修改密码</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logoutUser/logou.htm"><span class="am-icon-power-off"></span> 退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    <div class="admin-sidebar" style="width: 200px;">
+        <ul class="am-list admin-sidebar-list">
+
+        </ul>
+    </div>
+    <!-- sidebar end -->
+
+
+
+    <div class="admin-content">
+        <div class="am-tabs" data-am-tabs="">
+            <ul id="tab" class="am-tabs-nav am-nav am-nav-tabs">
+                <li id="homePageTab" class="am-active" lang="0"><a lang="${pageContext.request.contextPath}/index/main.htm" href="#contentPage" onclick='app.clickTab(this)' style="float: left">首页</a></li>
+            </ul>
+            <span class="am-icon-remove" style="margin-top:-26px; float:right"> <a href="#" onclick="app.removeTab()">关闭</a></span>
+
+            <div class="am-tabs-bd" style="height:1110px; min-height:1110px; overflow-y:auto;">
+                <div class="am-tab-panel am-fade am-in am-active" id="contentPage">
+                    <table id="totalTable" class="am-table am-table-bordered am-table-striped am-table-hover" style="width:100%;">
+                        <tr>
+                            <td colspan="999" style="background-color:#FFF">
+                                <button class="am-btn am-btn-primary am-btn-sm" type="button" onClick="findTotal()"><span class="am-icon-refresh"></span> 刷新统计</button>
+                            </td>
+                        </tr>
+                        <tr id="waitAuditTR" style="display: none; cursor:pointer" onclick="aa('/centerPay/verifySpotPay.htm')">
+                            <td width="15%" align="right">交费待审核条数：</td>
+                            <td id="waitAuditCount"></td>
+                        </tr>
+                        <tr id="notPrintSpotOrderTR" style="display: none; cursor:pointer" onclick="aa('/findStudentBookOrderForSpotCount/find.htm')">
+                            <td width="15%" align="right">中心发书单未打印条数：</td>
+                            <td id="notPrintSpotOrderCount"></td>
+                        </tr>
+                        <tr id="notPrintStudentOrderTR" style="display: none; cursor:pointer" onclick="aa('/findStudentBookOrderForStudentCount/find.htm')">
+                            <td width="15%" align="right">学生发书单未打印条数：</td>
+                            <td id="notPrintStudentOrderCount"></td>
+                        </tr>
+                        <tr id="notPackageSpotOrderTR" style="display: none; cursor:pointer" onclick="aa('/addStudentBookOrderPackage/open.htm')">
+                            <td width="15%" align="right">中心发书单未打包条数：</td>
+                            <td id="notPackageSpotOrderCount"></td>
+                        </tr>
+                        <tr id="notPackageStudentOrderTR" style="display: none; cursor:pointer" onclick="aa('/addStudentBookOrderPackageForStudent/open.htm')">
+                            <td width="15%" align="right">学生发书单未打包条数：</td>
+                            <td id="notPackageStudentOrderCount"></td>
+                        </tr>
+                        <tr id="notPrintSpotOnceOrderTR" style="display: none; cursor:pointer" onclick="aa('/findOnceOrderForSpotCount/find.htm')">
+                            <td width="15%" align="right">中心一次性发书单未打印条数：</td>
+                            <td id="notPrintSpotOnceOrderCount"></td>
+                        </tr>
+                        <tr id="notPrintStudentOnceOrderTR" style="display: none; cursor:pointer" onclick="aa('/findOnceOrderForStudentCount/find.htm)">
+                            <td width="15%" align="right">学生一次性发书单未打印条数：</td>
+                            <td id="notPrintStudentOnceOrderCount"></td>
+                        </tr>
+                        <tr id="notPackageSpotOnceOrderTR" style="display: none; cursor:pointer" onclick="aa('/addOnceOrderPackage/open.htm')">
+                            <td width="15%" align="right">中心一次性发书单未打包条数：</td>
+                            <td id="notPackageSpotOnceOrderCount"></td>
+                        </tr>
+                        <tr id="notPackageStudentOnceOrderTR" style="display: none; cursor:pointer" onclick="aa('/addOnceOrderPackageForStudent/open.htm')">
+                            <td width="15%" align="right">学生一次性发书单未打包条数：</td>
+                            <td id="notPackageStudentOnceOrderCount"></td>
+                        </tr>
+                        <tr id="notPrintSpotPlaceOrderTR" style="display: none; cursor:pointer" onclick="aa('/findPlaceOrderForSpotCount/find.htm')">
+                            <td width="15%" align="right">预订单发书单未打印条数：</td>
+                            <td id="notPrintSpotPlaceOrderCount"></td>
+                        </tr>
+                        <tr id="notPackageSpotPlaceOrderTR" style="display: none; cursor:pointer" onclick="aa('/placeOrderPackage/toPlaceOrderPackagePage.htm')">
+                            <td width="15%" align="right">预订单发书单未打包条数：</td>
+                            <td id="notPackageSpotPlaceOrderCount"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{}">
+                <div class="am-footer-miscs">
+                    <%--<p>由 <a href="http://www.attop.com/" title="至善网" target="_blank" class="">至善网</a> 提供技术支持</p><br/>--%>
+                    <p>版权所有 Copyright © 2010-2016 </p><br/>
+                    <p>渝ICP备11006229号 渝公网安备 50010902000107号</p><br/>
+                    <p class="browsehappy">如果你样式有问题，可能是你正在使用<strong>过时</strong>的浏览器，UI 不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+                        以获得更好的体验！</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>

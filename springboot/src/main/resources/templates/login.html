@@ -13,7 +13,7 @@
                 <fieldset>
                     <center>
                         <div class="am-form-group" style="color: #ffffff; text-align: center; font-size: 30px;">
-                            欢迎登录系统管理后台
+                            欢迎登录系统管理后台xxx
                         </div>
                         <div class="am-form-group">
                             <input type="text" id="loginName" name="loginName" placeholder="请输入用户名" style="width: 300px;" onfocus="$(this).css('color', '#fff');"/>
@@ -56,13 +56,13 @@
                 "pwd":pwd
             };
             $.ajax({
-                url:"/index.htm",
+                url:"/login.html",
                 method : 'POST',
                 async:false,
                 data:params,
                 success:function(data){
-                    if(data.msg == "success"){
-                        location.href = "${pageContext.request.contextPath}/index/main.htm";
+                    if(data.state == 0){
+                        location.href = "/index.html";
                     }else {
                         $("#msg").html(data.msg);
                     }

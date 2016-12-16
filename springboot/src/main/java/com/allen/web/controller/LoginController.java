@@ -6,6 +6,8 @@ import com.allen.entity.user.User;
 import com.allen.service.basic.menu.FindMenuByIdService;
 import com.allen.service.basic.resource.FindResourceByUserIdService;
 import com.allen.service.user.user.LoginUserService;
+import com.allen.util.DateUtil;
+import com.allen.util.UserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +53,19 @@ public class LoginController {
     }
 
     @RequestMapping("/index")
-    public String index(Map<String,Object> map){
+    public String index(HttpServletRequest request){
+        //获取当前年月日星期
+        String year = DateUtil.getThisYear();
+        String month = DateUtil.getThisMonth();
+        String day = DateUtil.getThisDay();
+        String week = DateUtil.getThisWeek();
+        request.setAttribute("year", year);
+        request.setAttribute("month", month);
+        request.setAttribute("day", day);
+        request.setAttribute("week", week);
+        request.setAttribute("loginName", UserUtil.getLoginUserForLoginName(request));
+        request.setAttribute("name", UserUtil.getLoginUserForName(request));
+        request.setAttribute("menu", UserUtil.getLoginUserForMenu(request));
         return "/index";
     }
 
@@ -93,3 +107,17 @@ public class LoginController {
         return menuResourceMap;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

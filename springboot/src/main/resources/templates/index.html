@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="common/header :: header">
 </head>
+
 <body>
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
@@ -13,7 +14,7 @@
         <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
             <li class="am-dropdown" data-am-dropdown="">
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                    <span class="am-icon-users"></span> ${name} 管理员 <span class="am-icon-caret-down"></span>
+                    <span class="am-icon-users"></span> <span th:text="${session.name} "></span> <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
                     <li><a href="#" onclick="openEditPwd()"><span class="am-icon-cog"></span> 修改密码</a></li>
@@ -27,17 +28,21 @@
 <div class="am-cf admin-main">
     <!-- sidebar start -->
     <div class="admin-sidebar" style="width: 200px;">
-        <ul class="am-list admin-sidebar-list">
-            <li class="admin-parent" style="background-color:#19a7f0" th:each="menu : ${menu}">
-                <a class="am-cf" data-am-collapse="{target: '#menu_${menuStat.count}'}" style="color:#fff;" onClick="app.clickMenu('${menuStat.count}')">
-                    <span class="am-icon-file" th:text="${menu.key}"></span> <span id="${menuStat.count}" class="am-icon-angle-right am-fr am-margin-right"></span>
+        <ul class="am-list admin-sidebar-list ">
+            <li class="admin-parent" style="background-color:#19a7f0" th:each="menu : ${session.menuMap}" >
+                <a class="am-cf" th:attr="data-am-collapse='{target: \'#menu_'+${menuStat.count}+'\'}'" style="color:#fff;" th:onclick="'javascript:app.clickMenu('+${menuStat.count}+');'">
+                    <span class="am-icon-file"></span> <span th:text=" ${menu.key}"></span><span th:id="${menuStat.count}" class="am-icon-angle-right am-fr am-margin-right"></span>
                 </a>
-                <ul class="am-list am-collapse admin-sidebar-sub" id="menu_${menuStat.count}" style="padding-left:0px;" th:each="resource : ${menu.value}">
-                    <li style="background-color:#f9f9f9">
-                        <a href="#" style="color:#19a7f0;" onclick="app.addTab('${resource.url}', '${resource.name}', '${resourceStat.count}', '${resourceStat.count}', 0)"><span class="am-icon-table" style="padding-left:14px;"></span> ${resource.name}</a>
+                <ul class="am-list am-collapse admin-sidebar-sub" th:id="menu_+${menuStat.count}" style="padding-left:0px;" >
+                    <li style="background-color:#f9f9f9" th:each="resource : ${menu.value}">
+                        <a href="#" style="color:#19a7f0;" th:onclick="'javascript:app.addTab(\''+${resource.url}+'\', \''+${resource.name}+'\', '+${resourceStat.count}+', '+${resourceStat.count}+', 0)'">
+                            <span class="am-icon-table" style="padding-left:14px;"> <span th:text=" ${resource.name}"></span></span>
+                        </a>
                     </li>
                 </ul>
             </li>
+
+
         </ul>
     </div>
     <!-- sidebar end -->
@@ -67,3 +72,8 @@
 </div>
 </body>
 </html>
+<script>
+    function editUser(id){
+        alert(id);
+    }
+</script>

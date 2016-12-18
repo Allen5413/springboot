@@ -47,6 +47,7 @@ public class LoginController {
             this.setSession(request, user.getId(), user.getLoginName(), user.getName());
             jsonObject.put("state", 0);
         }else{
+            throw new Bus
             jsonObject.put("state", 1);
         }
         return jsonObject;
@@ -63,9 +64,6 @@ public class LoginController {
         request.setAttribute("month", month);
         request.setAttribute("day", day);
         request.setAttribute("week", week);
-        request.setAttribute("loginName", UserUtil.getLoginUserForLoginName(request));
-        request.setAttribute("name", UserUtil.getLoginUserForName(request));
-        request.setAttribute("menu", UserUtil.getLoginUserForMenu(request));
         return "/index";
     }
 

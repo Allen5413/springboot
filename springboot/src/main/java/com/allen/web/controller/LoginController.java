@@ -1,6 +1,7 @@
 package com.allen.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.allen.base.exception.BusinessException;
 import com.allen.entity.basic.Menu;
 import com.allen.entity.user.User;
 import com.allen.service.basic.menu.FindMenuByIdService;
@@ -47,8 +48,7 @@ public class LoginController {
             this.setSession(request, user.getId(), user.getLoginName(), user.getName());
             jsonObject.put("state", 0);
         }else{
-            throw new Bus
-            jsonObject.put("state", 1);
+            throw new BusinessException("用户名密码不存在");
         }
         return jsonObject;
     }

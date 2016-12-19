@@ -1,8 +1,10 @@
 package com.allen.base.exception;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,26 +17,26 @@ public class GlobalDefaultExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public String defaultErrorHandler(HttpServletRequest req, Exception e)  {
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e)  {
         //打印异常信息：
         e.printStackTrace();
-        System.out.println("GlobalDefaultExceptionHandler.defaultErrorHandler()");
+        ModelAndView modelAndView = new ModelAndView("/error");
+        return modelAndView;
+    }
 
+    @ExceptionHandler(value = BusinessException.class)
+    @ResponseBody
+    public JSONObject businessErrorHandler(HttpServletRequest req, Exception e)  {
+        JSONObject jsonObject = new JSONObject();
+        //打印异常信息：
+        e.printStackTrace();
 
-       /*
-        * 返回json数据或者String数据：
-        * 那么需要在方法上加上注解：@ResponseBody
-        * 添加return即可。
-        */
-        return "程序异常";
-
-       /*
-        * 返回视图：
-        * 定义一个ModelAndView即可，
-        * 然后return;
-        * 定义视图文件(比如：error.html,error.ftl,error.jsp);
-        *
-        */
-
+        String eMsg = e.getMessage();
+        if(-1 < eMsg.indexOf("StaleObjectStateException")){
+            eMsg = "您操作的数据已经被修改，请重新获取最新的数据再做操作！";
+        }
+        jsonObject.put("state", 1);
+        jsonObject.put("msg", eMsg);
+        return jsonObject;
     }
 }

@@ -23,7 +23,7 @@ public class Hello2Controller {
     public String helloJsp(Map<String,Object> map){
         System.out.println("HelloController.helloJsp().hello=from Hello2Controller.helloJsp");
         map.put("hello","HelloController.helloJsp().hello=from Hello2Controller.helloJsp");
-        return"helloJsp";
+        return "helloJsp";
     }
 
 }

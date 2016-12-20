@@ -373,12 +373,11 @@ App.prototype.clickTab = function(obj){
     var url = $(obj).attr("lang");
     var falg;
     if(0 <= url.indexOf("?")) {
-        falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".htm", "");
+        falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".html", "");
     }else{
-        falg = url.replace("/", "").replace("/", "").replace(".htm", "");
+        falg = url.replace("/", "").replace("/", "").replace(".html", "");
     }
     var html = app.pageHtmlJSON[falg];
-    debugger;
     $("#contentPage").html(html);
 }
 
@@ -400,9 +399,9 @@ App.prototype.removeTab = function(){
 
             var falg;
             if(0 <= url.indexOf("?")) {
-                falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".htm", "");
+                falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".html", "");
             }else{
-                falg = url.replace("/", "").replace("/", "").replace(".htm", "");
+                falg = url.replace("/", "").replace("/", "").replace(".html", "");
             }
             var html = app.pageHtmlJSON[falg];
             $("#contentPage").html(html);
@@ -421,9 +420,9 @@ App.prototype.removeTab = function(){
 App.prototype.openTab = function(url, isServiceLoad){
     var falg;
     if(0 <= url.indexOf("?")) {
-        falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".htm", "");
+        falg = url.substring(0, url.indexOf("?")).replace("/", "").replace("/", "").replace(".html", "");
     }else{
-        falg = url.replace("/", "").replace("/", "").replace(".htm", "");
+        falg = url.replace("/", "").replace("/", "").replace(".html", "");
     }
     var html = this.pageHtmlJSON[falg];
     /**
@@ -455,7 +454,7 @@ App.prototype.searchFormPage = function(obj, url, btnObj){
     if(url != "") {
         $(btnObj).button('loading');
         setTimeout(function(){
-            var falg = url.replace("/", "").replace("/", "").replace(".htm", "");
+            var falg = url.replace("/", "").replace("/", "").replace(".html", "");
             var params = {};
             if(null != obj){
                 params = obj.serialize();

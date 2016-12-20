@@ -5,10 +5,10 @@ package com.allen.util;
  */
 public class StringUtil {
     public static boolean isEmpty(String str){
-        str = str.trim();
         if(null == str){
             return true;
         }else{
+            str = str.trim();
             if("".equals(str) || 1 > str.length()){
                 return true;
             }else{

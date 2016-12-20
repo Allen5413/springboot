@@ -15,23 +15,20 @@ import java.util.Map;
 /**
  * Created by Allen on 2016/12/20.
  */
-@Controller("findMenuPage")
+@Controller
+@RequestMapping(value = "/findMenuPage")
 public class FindMenuPageController extends BaseController {
     @Resource
     private FindMenuPageService findMenuPageService;
 
     @RequestMapping(value = "find")
-    public String FindPageByWhere(@RequestParam(value="name", required=false, defaultValue="") String name,
-                                  HttpServletRequest request) {
-        try {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("name", name.trim());
-            PageInfo pageInfo = super.getPageInfo(request);
-            pageInfo = findMenuPageService.find(pageInfo, params);
-            request.setAttribute("pageInfo", pageInfo);
-        } catch (Exception e) {
-            return "error";
-        }
+    public String find(@RequestParam(value="name", required=false, defaultValue="") String name,
+                                  HttpServletRequest request) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("name", name.trim());
+        PageInfo pageInfo = super.getPageInfo(request);
+        pageInfo = findMenuPageService.find(pageInfo, params);
+        request.setAttribute("pageInfo", pageInfo);
         return "/menu/menuList";
     }
 }

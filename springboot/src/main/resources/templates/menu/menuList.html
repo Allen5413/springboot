@@ -1,10 +1,10 @@
 <p />
 <form id="pageForm" name="pageForm" action="/findMenuPage/find.html" method="post">
     <input type="hidden" id="rows" name="rows" />
-    <input type="hidden" id="currentPage" name="page" value="${pageInfo.currentPage}"/>
+    <input type="hidden" id="currentPage" name="page" th:value="${pageInfo.currentPage}"/>
 
     <label >菜单名称：</label>
-    <input type="text" id="name" name="name" value="${param.name}" />&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" id="name" name="name" th:value="${#httpServletRequest.getParameter('name')}" />&nbsp;&nbsp;&nbsp;&nbsp;
 
     <button type="button" id="searchBtn" class="am-btn am-btn-primary btn-loading-example"
             data-am-loading="{spinner: 'circle-o-notch', loadingText: '查询中...', resetText: '查询超时'}"
@@ -26,30 +26,26 @@
         <th style="width: 15%;">操作时间</th>
         <th>操作</th>
     </tr>
-    <c:if test="${empty pageInfo || empty pageInfo.pageResults}">
-        <tr>
-            <td colspan="6" align="center" style="color: red;">没有找到相关数据</td>
-        </tr>
-    </c:if>
-    <c:forEach var="menu" items="${pageInfo.pageResults}" varStatus="status">
-        <tr>
-            <td align="center">${status.index+1}</td>
-            <td>${menu.name}</td>
-            <td>${menu.remark}</td>
-            <td>${menu.operator}</td>
-            <td><fmt:formatDate value="${menu.operateTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-            <td>
-                <div class="am-btn-group">
-                    <button type="button" class="am-btn am-btn-primary am-round" onClick="edit(${menu.id})"><span class="am-icon-edit"></span> 修改</button>
-                    <button type="button" class="am-btn am-btn-primary am-round btn-loading-example"
-                            data-am-loading="{spinner: 'circle-o-notch', loadingText:'正在删除...', resetText: '<span class=am-icon-trash-o></span> 删除'}"
-                            onClick="del(${menu.id}, this)"><span class="am-icon-trash-o"></span> 删除</button>
-                </div>
-            </td>
-        </tr>
-    </c:forEach>
+    <!--<tr th:if="${empty pageInfo.pageResults}">-->
+        <!--<td colspan="6" align="center" style="color: red;">没有找到相关数据</td>-->
+    <!--</tr>-->
+    <tr th:each="menu : ${pageInfo.pageResults}">
+        <td align="center" th:text="${menuStat.count}"></td>
+        <td th:text="${menu.name}"></td>
+        <td th:text="${menu.remark}"></td>
+        <td th:text="${menu.operator}"></td>
+        <td th:text="${menu.operateTime}"></td>
+        <td>
+            <div class="am-btn-group">
+                <button type="button" class="am-btn am-btn-primary am-round" onClick="edit(${menu.id})"><span class="am-icon-edit"></span> 修改</button>
+                <button type="button" class="am-btn am-btn-primary am-round btn-loading-example"
+                        data-am-loading="{spinner: 'circle-o-notch', loadingText:'正在删除...', resetText: ' 删除'}"
+                        ><span class="am-icon-trash-o"></span> 删除</button>
+            </div>
+        </td>
+    </tr>
 </table>
-<%@ include file="/common/page2.jsp"%>
+<span th:include="common/pager :: pager"></span>
 <script>
     function edit(id){
         var url = '${pageContext.request.contextPath}/editMenu/openEditMenuPage.htm?id='+id;
